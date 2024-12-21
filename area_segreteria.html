@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Segreteria</title>
+</head>
+<body>
+    <h1>Login Area Segreteria</h1>
+    <div class="login-box">
+        <input type="text" id="username" placeholder="Nome Utente">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Accedi</button>
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === 'segreteria' && password === 'cfp.2024') {
+                window.location.href = 'segreteria_home.html';
+            } else {
+                alert('Nome utente o password errata!');
+            }
+        }
+    </script>
+</body>
+</html>

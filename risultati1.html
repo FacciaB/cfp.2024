@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risultati</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .rosso {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestione Valutazioni</h1>
+        <form id="valutazioneForm">
+            <label for="quadrimestre">Quadrimestre:</label>
+            <select id="quadrimestre">
+                <option value="1">1° Quadrimestre</option>
+                <option value="2">2° Quadrimestre</option>
+            </select>
+            <br><br>
+
+            <label for="classe">Classe:</label>
+            <select id="classe">
+                <option value="OBI-04-2023">OBI-04-2023</option>
+                <option value="OBI-04-2025">OBI-04-2025</option>
+            </select>
+            <br><br>
+
+            <label for="materia">Materia:</label>
+            <select id="materia">
+                <option value="Italiano">Italiano</option>
+                <option value="Geografia">Geografia</option>
+            </select>
+            <br><br>
+
+            <button type="button" onclick="creaValutazione()">Crea Valutazione</button>
+        </form>
+
+        <table id="valutazioniTable">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Voto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Righe della tabella generate dinamicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const studenti = {
+            "OBI-04-2023": [
+                "Cane Dematteis", "Cane Benua", "Mician Dematteis", "Cicciobello Allabue", "Micheal Temperini",
+                "Cattivo Temperini", "Bambola Rossetti", "Teschio Carottini", "Robottina Carottini"
+            ],
+            "OBI-04-2025": [
+                "Stellina Dematteis", "Tartaruga Dematteis", "Yucky Benua", "Lollo Benua", "Leonard Benua",
+                "Sparcky Benua", "Flaffy Dematteis", "Tina Dematteis", "Grigetta Benua", "Luna Dematteis",
+                "Luna Benua", "Kendy Dematteis", "Papero Benua", "Curt Dematteis", "Briciola Dematteis"
+            ]
+        };
+
+        // Carica i dati salvati
+        let valutazioni = JSON.parse(localStorage.getItem('valutazioni')) || [];
+
+        // Funzione per creare una nuova valutazione
+        function creaValutazione() {
+            const quadrimestre = document.getElementById('quadrimestre').value;
+            const classe = document.getElementById('classe').value;
+            const materia = document.getElementById('materia').value;
+            const studentiClasse = studenti[classe];
+
+            // Aggiungi la nuova valutazione alla lista
+            const nuovaValutazione = studentiClasse.map(nome => ({
+                nome,
+                classe,
+                quadrimestre,
+                materia,
+                voto: '' // Inizia vuoto
+            }));
+
+            valutazioni.push(...nuovaValutazione);
+            localStorage.setItem('valutazioni', JSON.stringify(valutazioni));
+
+            // Aggiorna la tabella
+            aggiornaTabella();
+        }
+
+        // Funzione per aggiornare la tabella
+        function aggiornaTabella() {
+            const tbody = document.getElementById('valutazioniTable').querySelector('tbody');
+            tbody.innerHTML = ''; // Pulisce la tabella
+
+            valutazioni.forEach((val, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${val.nome}</td>
+                    <td>
+                        <input type="number" min="10" max="100" step="1" value="${val.voto}" onchange="aggiornaVoto(${index}, this.value)">
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Funzione per aggiornare il voto
+        function aggiornaVoto(index, voto) {
+            valutazioni[index].voto = voto;
+            localStorage.setItem('valutazioni', JSON.stringify(valutazioni));
+        }
+
+        // Carica le valutazioni all'avvio
+        aggiornaTabella();
+    </script>
+</body>
+</html>

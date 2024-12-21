@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vita Scolastica - Alessia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .rosso {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Attività di Alessia</h1>
+        <table id="attivitaTable">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Materia</th>
+                    <th>Orario</th>
+                    <th>Classe</th>
+                    <th>Appello</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Attività caricate dinamicamente -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Nome del docente per questa pagina
+        const docenteCorrente = "alessia";
+
+        // Carica le attività dal localStorage
+        const attivita = JSON.parse(localStorage.getItem('attivita')) || [];
+        
+        // Filtra solo le attività del docente corrente
+        const attivitaDocente = attivita.filter(att => att.docente === docenteCorrente);
+
+        // Popola la tabella
+        const tableBody = document.getElementById('attivitaTable').querySelector('tbody');
+        attivitaDocente.forEach((att, index) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${att.data}</td>
+                <td>${att.materia}</td>
+                <td>${att.orarioInizio} - ${att.orarioFine}</td>
+                <td>${att.classe}</td>
+                <td>
+                    <button onclick="svolgiAppello(${index})">${att.appelloSvolto ? 'Appello Svolto' : 'Svolgi Appello'}</button>
+                </td>
+            `;
+            tableBody.appendChild(tr);
+        });
+
+        // Funzione per svolgere l'appello
+        function svolgiAppello(index) {
+            const attivitaIndex = attivita.findIndex(att => att.docente === docenteCorrente && !att.appelloSvolto);
+            if (attivitaIndex !== -1) {
+                attivita[attivitaIndex].appelloSvolto = true;
+                localStorage.setItem('attivita', JSON.stringify(attivita));
+                alert('Appello svolto!');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

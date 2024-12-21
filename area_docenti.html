@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Area Docenti</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            margin-top: 50px;
+        }
+        .login-box {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            margin: auto;
+            padding: 20px;
+        }
+        input, button {
+            display: block;
+            width: 90%;
+            margin: 10px auto;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login Area Docenti</h1>
+    <div class="login-box">
+        <input type="text" id="username" placeholder="Nome Utente">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Accedi</button>
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (password === 'cfp.2024') {
+                switch (username) {
+                    case 'alessia.dematteis':
+                        window.location.href = 'docente_alessia.html';
+                        break;
+                    case 'pikky.pomodoro':
+                        window.location.href = 'docente_pikky.html';
+                        break;
+                    case 'spinaci.verdi':
+                        window.location.href = 'docente_spinaci.html';
+                        break;
+                    case 'insalata.russa':
+                        window.location.href = 'docente_insalata.html';
+                        break;
+                    case 'budino.caramello':
+                        window.location.href = 'docente_budino.html';
+                        break;
+                    case 'enrico.dematteis':
+                        window.location.href = 'docente_enrico.html';
+                        break;
+                    default:
+                        alert('Nome utente non valido!');
+                }
+            } else {
+                alert('Password errata!');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segreteria - Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 50%;
+            margin: 20px auto;
+        }
+        label, select, input, button {
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Segreteria - Crea Nuova Attività</h1>
+    <div class="container">
+        <label for="docente">Docente:</label>
+        <select id="docente">
+            <option value="Alessia">Alessia</option>
+            <option value="Pikky">Pikky</option>
+            <option value="Spinaci">Spinaci</option>
+            <option value="Insalata">Insalata</option>
+            <option value="Budino">Budino</option>
+            <option value="Enrico">Enrico</option>
+        </select>
+
+        <label for="materia">Materia:</label>
+        <select id="materia">
+            <option value="Matematica">Matematica</option>
+            <option value="Italiano">Italiano</option>
+            <option value="Geografia">Geografia</option>
+            <option value="Scienze">Scienze</option>
+            <option value="Storia">Storia</option>
+        </select>
+
+        <label for="classe">Classe:</label>
+        <select id="classe">
+            <option value="3 Media">3 Media</option>
+            <option value="1 Superiore">1 Superiore</option>
+        </select>
+
+        <label for="orarioInizio">Orario di Inizio (hh:mm):</label>
+        <input type="time" id="orarioInizio">
+
+        <label for="orarioFine">Orario di Fine (hh:mm):</label>
+        <input type="time" id="orarioFine">
+
+        <button id="creaAttivita">Crea Attività</button>
+    </div>
+
+    <script>
+        // Recupero attività esistenti dal localStorage
+        const attivita = JSON.parse(localStorage.getItem('attivita')) || [];
+
+        document.getElementById('creaAttivita').addEventListener('click', () => {
+            const docente = document.getElementById('docente').value;
+            const materia = document.getElementById('materia').value;
+            const classe = document.getElementById('classe').value;
+            const orarioInizio = document.getElementById('orarioInizio').value;
+            const orarioFine = document.getElementById('orarioFine').value;
+
+            if (docente && materia && classe && orarioInizio && orarioFine) {
+                const nuovaAttivita = {
+                    docente,
+                    materia,
+                    classe,
+                    orarioInizio,
+                    orarioFine,
+                    stato: 'Appello non svolto',
+                    data: new Date().toLocaleDateString()
+                };
+
+                // Aggiungo la nuova attività all'elenco
+                attivita.push(nuovaAttivita);
+                localStorage.setItem('attivita', JSON.stringify(attivita));
+
+                alert('Attività creata con successo!');
+            } else {
+                alert('Compila tutti i campi!');
+            }
+        });
+    </script>
+</body>
+</html>
