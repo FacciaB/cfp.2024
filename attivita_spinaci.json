@@ -1,0 +1,28 @@
+<form action="crea_attivita.php" method="POST">
+    <label for="docente">Docente:</label>
+    <select name="docente" id="docente" required>
+        <option value="enrico">Enrico</option>
+        <option value="alessia">Alessia</option>
+        <option value="pikky">Pikky</option>
+        <option value="spinaci">Spinaci</option>
+        <option value="insalata">Insalata</option>
+        <option value="budino">Budino</option>
+    </select>
+
+    <label for="materia">Materia:</label>
+    <input type="text" id="materia" name="materia" required>
+
+    <label for="classe">Classe:</label>
+    <input type="text" id="classe" name="classe" required>
+
+    <label for="orario_inizio">Orario Inizio:</label>
+    <input type="time" id="orario_inizio" name="orario_inizio" required>
+
+    <label for="orario_fine">Orario Fine:</label>
+    <input type="time" id="orario_fine" name="orario_fine" required>
+
+    <label for="data">Data:</label>
+    <input type="date" id="data" name="data" required>
+
+    <button type="submit">Crea Attività</button>
+</form>
